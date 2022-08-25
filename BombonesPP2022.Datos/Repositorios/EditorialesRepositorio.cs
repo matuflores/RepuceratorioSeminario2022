@@ -94,7 +94,32 @@ namespace BombonesPP2022.Datos.Repositorios
                 throw new Exception(e.Message);
             }
         }
+        public bool Existe(Editorial editorial)
+        {
+            try
+            {
+                using (var cn = conexionBd.AbrirConexion())
+                {
+                    var cadenaComando = "SELECT COUNT(*) FROM Editoriales WHERE NombreEditorial=@nom";
+                    if (editorial.EditorialId != 0)
+                    {
+                        cadenaComando += " AND EditorialId<>@EditorialId";
+                    }
+                    var comando = new SqlCommand(cadenaComando, cn);
+                    comando.Parameters.AddWithValue("@nom", editorial.NombreEditorial);
+                    if (editorial.EditorialId != 0)
+                    {
+                        comando.Parameters.AddWithValue("@EditorialId", editorial.EditorialId);
+                    }
 
+                    return (int)comando.ExecuteScalar() > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         public int Borrar(Editorial editorial)
         {
             int registrosAfectados = 0;

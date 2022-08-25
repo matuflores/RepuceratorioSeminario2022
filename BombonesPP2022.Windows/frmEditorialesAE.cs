@@ -29,7 +29,7 @@ namespace BombonesPP2022.Windows
             }
         }
 
-        public Editorial GetPais()
+        public Editorial GetEditorial()
         {
             return editorial;
         }
